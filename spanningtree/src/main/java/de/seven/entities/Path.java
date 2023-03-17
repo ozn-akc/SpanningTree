@@ -1,15 +1,22 @@
 package de.seven.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Path {
+    @JsonProperty("from")
     Node from;
+    @JsonProperty("to")
     Node to;
+    @JsonProperty("value")
     Integer value;
 
     public boolean hasNode(Node node){
@@ -23,9 +30,9 @@ public class Path {
     public Node getOtherNode(Node node){
         if(hasNode(node)){
             if(from.equals(node)){
-                return from;
+                return to;
             }
-            return to;
+            return from;
         }else{
             return null;
         }

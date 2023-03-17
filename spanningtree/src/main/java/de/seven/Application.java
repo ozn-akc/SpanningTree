@@ -16,6 +16,7 @@ public class Application {
                                     .getFile()));
         } catch(Exception e){
             data = null;
+            System.out.println(e);
             System.out.println("Something went terribly wrong!!!");
         }
         data.calculatePath();
