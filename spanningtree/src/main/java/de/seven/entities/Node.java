@@ -13,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Node {
     @JsonProperty("id")
+        System.out.println("test");
+        System.out.println("test");
     Integer id;
     @JsonProperty("name")
     String name;
@@ -21,7 +23,7 @@ public class Node {
     @JsonIgnore
     Integer value;
     @JsonIgnore
-    Integer routDepth;
+    Integer routeDepth;
 
     public Node(Integer id){
         this.id = id;
@@ -31,4 +33,7 @@ public class Node {
         this.name= name;
     }
 
+    public void increaseRouteDepth(){
+        routeDepth++;
+    }
 }

@@ -1,6 +1,5 @@
 package de.seven.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +24,10 @@ public class Path {
 
     public boolean isFromNode(Node node){
         return from.equals(node);
+    }
+
+    public boolean containsNoNull(){
+        return from!=null && to!=null;
     }
 
     public Node getOtherNode(Node node){
