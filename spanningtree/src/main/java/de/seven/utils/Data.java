@@ -33,7 +33,6 @@ public class Data {
                 )
         );
         calculatePath();
-        System.out.println("test");
     }
 
     public void calculatePath(){
@@ -109,5 +108,14 @@ public class Data {
             node = node.getRoot();
         }
         return node;
+    }
+
+    public String print(){
+        String output = "";
+        for (Node node :
+             data.keySet()) {
+            output += node.getName() + " -> " + node.getRoot().getName() + " : " +node.getValue() +"\n";
+        }
+        return output;
     }
 }

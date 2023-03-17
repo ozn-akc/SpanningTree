@@ -13,8 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Node {
     @JsonProperty("id")
-        System.out.println("test");
-        System.out.println("test");
     Integer id;
     @JsonProperty("name")
     String name;
