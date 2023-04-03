@@ -21,7 +21,7 @@ public class Node {
     @JsonIgnore
     Integer value;
     @JsonIgnore
-    Integer routeDepth;
+    Integer rootDepth;
 
     public Node(Integer id){
         this.id = id;
@@ -31,7 +31,7 @@ public class Node {
         this.name= name;
     }
 
-    public void increaseRouteDepth(){
-        routeDepth++;
+    public void increaseRootDepth(){
+        rootDepth++;
     }
 }

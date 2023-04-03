@@ -6,10 +6,12 @@ import de.seven.entities.Path;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.xml.stream.events.NotationDeclaration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -40,7 +42,7 @@ public class Data {
         data.forEach( (k,v) -> {
             k.setRoot(k);
             k.setValue(0);
-            k.setRouteDepth(0);
+            k.setRootDepth(0);
         });
         Node start = data.keySet().stream().toList().get(randomInt);
         newBroadcast(Collections.singletonList(start));
@@ -64,7 +66,7 @@ public class Data {
                 );
         }
         newNodes.removeAll(usedNodes);
-        newNodes = newNodes.stream().distinct().filter(node -> node.getRouteDepth()<=10).toList();
+        newNodes = newNodes.stream().distinct().filter(node -> node.getRootDepth()<=10).toList();
         if(newNodes.size()!=0){
             newBroadcast(newNodes.stream().distinct().toList());
         }
@@ -72,12 +74,13 @@ public class Data {
 
     private void checkRoot(Node sender, Path path){
         Node receiver = path.getOtherNode(sender);
-        sender.increaseRouteDepth();
+        sender.increaseRootDepth();
         if(getRootNode(sender).getId()<getRootNode(receiver).getId()){
             receiver.setRoot(sender);
             receiver.setValue(path.getValue() + sender.getValue());
         }else if(getRootNode(sender).getId().equals(getRootNode(receiver).getId())){
-            if(sender.getValue()+path.getValue()<=receiver.getValue()){
+            if(sender.getValue()+path.getValue()<receiver.getValue()){
+                receiver.setRoot(sender);
                 receiver.setValue(sender.getValue()+path.getValue());
             }
         }
@@ -112,8 +115,9 @@ public class Data {
 
     public String print(){
         String output = "";
+        List<Node> list = data.keySet().stream().sorted(Comparator.comparing(Node::getName)).toList();
         for (Node node :
-             data.keySet()) {
+                list) {
             output += node.getName() + " -> " + node.getRoot().getName() + " : " +node.getValue() +"\n";
         }
         return output;

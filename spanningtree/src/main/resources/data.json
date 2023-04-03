@@ -37,12 +37,12 @@
       "value": 10
     },
     {
-      "from": 10,
-      "to": 7,
+      "from": "B",
+      "to": "D",
       "value": 15
     },
     {
-      "from": 10,
+      "from": "B",
       "to": "E",
       "value": 10
     },
