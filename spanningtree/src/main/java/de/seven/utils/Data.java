@@ -34,7 +34,6 @@ public class Data {
                                 .toList()
                 )
         );
-        calculatePath();
     }
 
     public void calculatePath(){
@@ -45,6 +44,8 @@ public class Data {
             k.setRootDepth(0);
         });
         Node start = data.keySet().stream().toList().get(randomInt);
+        System.out.println("StartNode: "+start.getName());
+        System.out.println("");
         newBroadcast(Collections.singletonList(start));
     }
 
@@ -68,7 +69,7 @@ public class Data {
         newNodes.removeAll(usedNodes);
         newNodes = newNodes.stream().distinct().filter(node -> node.getRootDepth()<=10).toList();
         if(newNodes.size()!=0){
-            newBroadcast(newNodes.stream().distinct().toList());
+            newBroadcast(newNodes);
         }
     }
 
@@ -79,7 +80,7 @@ public class Data {
             receiver.setRoot(sender);
             receiver.setValue(path.getValue() + sender.getValue());
         }else if(getRootNode(sender).getId().equals(getRootNode(receiver).getId())){
-            if(sender.getValue()+path.getValue()<receiver.getValue()){
+            if(getPathValue(sender)+path.getValue()<getPathValue(receiver)){
                 receiver.setRoot(sender);
                 receiver.setValue(sender.getValue()+path.getValue());
             }
@@ -113,12 +114,22 @@ public class Data {
         return node;
     }
 
+    public int getPathValue(Node node){
+        Node parent = node.getRoot();
+        if(parent == node){
+            return parent.getValue();
+        }else{
+            Path path = data.get(node).stream().filter(pa -> pa.getOtherNode(node).equals(parent)).findFirst().get();
+            return getPathValue(parent) + path.getValue();
+        }
+    }
+
     public String print(){
         String output = "";
         List<Node> list = data.keySet().stream().sorted(Comparator.comparing(Node::getName)).toList();
         for (Node node :
                 list) {
-            output += node.getName() + " -> " + node.getRoot().getName() + " : " +node.getValue() +"\n";
+            output += node.getName() + " -> " + node.getRoot().getName() + " : " + node.getValue() + "||||" +getPathValue(node) +"\n";
         }
         return output;
     }
