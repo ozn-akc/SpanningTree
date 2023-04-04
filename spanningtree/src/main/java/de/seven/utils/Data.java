@@ -78,13 +78,12 @@ public class Data {
         sender.increaseRootDepth();
         if(getRootNode(sender).getId()<getRootNode(receiver).getId()){
             receiver.setRoot(sender);
-            receiver.setValue(path.getValue() + sender.getValue());
         }else if(getRootNode(sender).getId().equals(getRootNode(receiver).getId())){
             if(getPathValue(sender)+path.getValue()<getPathValue(receiver)){
                 receiver.setRoot(sender);
-                receiver.setValue(sender.getValue()+path.getValue());
             }
         }
+        receiver.setValue(getPathValue(receiver));
     }
 
     private List<Path> completePaths(List<Node> nodes,List<Path> incomplete){
