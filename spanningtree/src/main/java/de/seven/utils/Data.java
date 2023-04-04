@@ -44,8 +44,7 @@ public class Data {
             k.setRootDepth(0);
         });
         Node start = data.keySet().stream().toList().get(randomInt);
-        System.out.println("StartNode: "+start.getName());
-        System.out.println("");
+        System.out.println("Startnode: " + start.getName());
         newBroadcast(Collections.singletonList(start));
     }
 
@@ -66,7 +65,6 @@ public class Data {
                                 .toList()
                 );
         }
-        newNodes.removeAll(usedNodes);
         newNodes = newNodes.stream().distinct().filter(node -> node.getRootDepth()<=10).toList();
         if(newNodes.size()!=0){
             newBroadcast(newNodes);
@@ -128,7 +126,7 @@ public class Data {
         List<Node> list = data.keySet().stream().sorted(Comparator.comparing(Node::getName)).toList();
         for (Node node :
                 list) {
-            output += node.getName() + " -> " + node.getRoot().getName() + " : " + node.getValue() + "||||" +getPathValue(node) +"\n";
+            output += node.getName() + " -> " + node.getRoot().getName() + " : " + node.getValue() +"\n";
         }
         return output;
     }
